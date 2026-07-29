@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>web phone</title>
+    <!-- Load local minified JsSIP Library -->
+    <script src="jssip.min.js"></script>
+    <link rel="stylesheet" href="phone.css">
+</head>
+<body>
+
+    <!-- Parent container uses classes (view-phone or view-settings) to swap screens -->
+    <main id="phone-app" class="view-phone">
+        
+        <!-- Upper Line: App Header -->
+        <header class="phone-header">
+            <div class="phone-logo-container">
+                <div class="phone-logo-icon">📞</div>
+                <h1 class="phone-title">web phone</h1>
+            </div>
+            <!-- 3-line hamburger toggle button -->
+            <button class="menu-toggle-btn" onclick="toggleSettings()" title="Settings">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </header>
+
+        <!-- Main Display Content Area -->
+        <div class="screen-wrapper">
+            
+            <!-- Phone Screen (Ready / Call UI) -->
+            <section id="screen-phone" class="phone-screen-content">
+                <div id="dialer-display" class="dialer-display">
+                    <input type="text" id="phone-input" placeholder="Enter destination name or phone number" autocomplete="off" autofocus />
+                </div>
+
+                <!-- Video Viewport Container (Hidden by default, shown during active calls) -->
+                <div id="video-container" class="video-window">
+                    <video id="remote-video" autoplay playsinline class="main-video-feed"></video>
+                    <video id="local-video" autoplay playsinline muted class="pip-video-feed hidden"></video>
+                </div>
+
+                <div id="call-controls" class="call-controls">
+                    <button id="mode-toggle" class="btn-mode" type="button" onclick="toggleCallMode()">Video</button>
+                    <button id="video-send-toggle" class="btn-mode" type="button" onclick="toggleSendVideo()" style="display:none">Send Video</button>
+                    <button id="mute-toggle" class="btn-mode" type="button" onclick="toggleMute()" style="display:none">Mute</button>
+                    <button id="call-action" class="btn-call" onclick="startCall()">Call</button>
+                </div>
+            </section>
+
+            <!-- Settings Screen -->
+            <section id="screen-settings">
+                <form id="settings-form" onsubmit="event.preventDefault();">
+                    <div class="settings-header">
+                        <h3>Account Settings</h3>
+                        <button type="button" class="btn-close-settings" onclick="changeScreen('phone')">Back to Phone</button>
+                    </div>
+                    <div class="settings-group">
+                        <label for="setting-server">Server URL (WebSocket):</label>
+                        <input type="text" id="setting-server" placeholder="wss://example.com:port" />
+
+                        <label for="setting-ice">ICE Servers (JSON Configuration):</label>
+                        <textarea id="setting-ice" placeholder='[{"urls":"stun:stun.l.google.com"}]'></textarea>
+
+                        <label for="setting-displayname">Display Name:</label>
+                        <input type="text" id="setting-displayname" placeholder="John Doe" />
+
+                        <label for="setting-username">Username:</label>
+                        <input type="text" id="setting-username" placeholder="username or phone number" />
+
+                        <label for="setting-password">Password:</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="setting-password" name="password" />
+                            <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility()" title="Toggle Password Visibility">
+                                <span class="eye-contour"></span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Incoming Call Modal Popup Overlay Container -->
+            <div id="incoming-modal" class="modal-overlay">
+                <div class="modal-box">
+                    <div class="modal-icon-pulse">📞</div>
+                    <h4>Incoming Call</h4>
+                    <p id="caller-id">Unknown Caller</p>
+                    <div id="modal-answer-mode" style="display:none">
+                        <button id="modal-mode-toggle" class="btn-mode" type="button" onclick="toggleAnswerMode()">Send Video</button>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn-answer" onclick="acceptIncomingCall()">Answer</button>
+                        <button class="btn-reject" onclick="rejectIncomingCall()">Reject</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Audio unlock banner: shown only when browser blocks autoplay -->
+        <div id="audio-unlock-banner" class="audio-unlock-banner" style="display:none">
+            <span>🔔 Ringing is blocked by your browser.</span>
+            <button onclick="unlockAudio()">Click here to enable</button>
+        </div>
+
+        <!-- Lower Line: Status Bar -->
+        <footer class="phone-status-bar">
+            <span id="status-text">Disconnected</span>
+        </footer>
+
+    </main>
+
+    <audio id="remote-audio" autoplay></audio>
+
+    <script src="phone.js"></script>
+</body>
+</html>
