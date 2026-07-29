@@ -27,3 +27,12 @@ Of course, I know that a serious, production-ready phone should probably have fe
 But... that's not what this test phone is about! This app is intentionally designed to be as simple, basic, and lightweight as possible. 
 
 If you need any features that are missing, feel free to fork the repository and tweak it to your heart's content.
+
+
+## How to Test the Web Phone
+
+1. **Open the Web Phone:** Launch the live application at [sip-lazy.github.io](https://github.io) (Google Chrome is highly recommended).
+2. **Configure Settings:** Click the menu button (three dashes) in the top-right corner. Enter your **Proxy URL**, **Username**, **Password**, and **STUN/TURN Server URL**.
+3. **Set Up a Second Device:** Repeat this process on a completely separate computer using a different account.
+4. **Place a Test Call:** Once both instances are configured, you can call from the web phone on one computer to the web phone on the other.
+
