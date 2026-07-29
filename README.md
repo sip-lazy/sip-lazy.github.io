@@ -2,9 +2,10 @@
 
 A basic browser WebRTC phone utilizing JsSIP for audio and video calls, compatible with the repository's sip_proxy or other standard SIP servers. 
 
-While playing around with a SIP proxy, I realized I needed an actual phone to test it. At the same time, I wanted to take GitHub Copilot for a spin and see how fast I could build a simple phone app. 
+ 
+While playing around with the repository's sip_proxy, I realized I needed an actual phone to test it. At the same time, I wanted to take GitHub Copilot for a spin and see how fast I could build a simple phone app.
 
-Of course, I know that a serious, production-ready phone should probably have features like: 
+Of course, I know that a serious, production-ready phone should probably have features like:
 
 * Phonebook and contacts management
 * Full call history logs
